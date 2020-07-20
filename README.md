@@ -102,7 +102,7 @@ It is possible to use existing MySQL instance when specity `instance_id` paramet
 
 ## Authors
 
-Created and maintained by [TencentCloud](https://github.com/terraform-providers/terraform-provider-tencentcloud)
+Created and maintained by [TencentCloud](https://github.com/tencentcloudstack/terraform-provider-tencentcloud)
 
 ## License
 
