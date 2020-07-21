@@ -1,8 +1,3 @@
-provider "tencentcloud" {
-    version = ">=1.18.1"
-    region = local.region
-}
-
 data "tencentcloud_vpc_instances" "default" {
     name = "Default-VPC"
 }

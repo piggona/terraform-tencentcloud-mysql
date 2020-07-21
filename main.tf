@@ -1,8 +1,3 @@
-provider "tencentcloud" {
-    version = ">=1.18.1"
-    region = local.region
-}
-
 resource "tencentcloud_mysql_instance" "this" {
     count = var.create_new ? 1 : 0
 
