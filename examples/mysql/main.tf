@@ -3,7 +3,6 @@ variable "region" {
 }
 
 provider "tencentcloud" {
-  version = ">=1.18.1"
   region  = "ap-guangzhou"
 }
 
