@@ -19,7 +19,6 @@ module "mysql" {
     source = "terraform-tencentcloud-modules/mysql/tencentcloud"
     version = "1.0.0"
 
-    create_new = true
     instance_name = "5.7"
     mem_size = 1000
     volume_size = 200
@@ -41,7 +40,7 @@ module "mysql" {
 ## Conditional Creation
 
 This module can create MySQL instance and MySQL account.
-It is possible to use existing MySQL instance when specity `instance_id` parameter and set create_new to `false`.
+It is possible to use existing MySQL instance when specity `instance_id` parameter.
 
 ## Inputs
 
@@ -64,7 +63,6 @@ It is possible to use existing MySQL instance when specity `instance_id` paramet
 | root_password | Password of root account. This parameter can be specified when you purchase master instances, but it should be ignored when you purchase read-only instances or disaster recovery instances. | string | password | no 
 | security_groups | Security groups to use. | list | [] | no 
 | backup_time |  Instance backup time, in the format of "HH:mm-HH:mm". Time setting interval is four hours. Default to "02:00-06:00". The following value can be supported: 02:00-06:00, 06:00-10:00, 10:00-14:00, 14:00-18:00, 18:00-22:00, and 22:00-02:00. | string | 02:00-06:00 | no 
-| create_new | The flag indicates whether to create a new mysql instance. | bool | true | no 
 | region | TencentCloud region to launch resources. | string |  | no 
 | first_slave_zone | Zone information about first slave instance. | string |  | no 
 | retention_period |  Instance backup retention days. Valid values: [7-730]. And default value is 7. | string | 7 | no 
@@ -75,7 +73,7 @@ It is possible to use existing MySQL instance when specity `instance_id` paramet
 | second_slave_zone | Zone information about second slave instance. | string |  | no 
 | account | Multiple account instances.Every element of the list contains a tencentcloud_mysql_account configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_account.html for configuration guide. | list | [] | no 
 | mysql_privilege | Multiple privilege configuration instances.Every element of the list contains a tencentcloud_mysql_privilege configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_privilege.html for configuration guide. | list | [] | no 
-| instance_id | The id of a mysql instance.Required when create_new is false | string |  | no 
+| instance_id | The id of a mysql instance. | string |  | no 
 | subnet_id | Private network ID. If vpc_id is set, this value is required. | string |  | no 
 | charge_type | Pay type of instance, valid values are PREPAID, POSTPAID. Default is POSTPAID. | string | POSTPAID | no 
 | readonly_instances | Multiple readonly instances.Every element of the list contains a tencentcloud_mysql_readonly_instance configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_readonly_instance.html for configuration guide. | list | [] | no 

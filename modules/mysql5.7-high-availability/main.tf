@@ -16,7 +16,6 @@ resource "tencentcloud_security_group" "default" {
 module "mysql" {
   source = "../../"
 
-  create_new        = true
   instance_name     = var.instance_name
   tags              = var.tags
   engine_version    = "5.7"

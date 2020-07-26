@@ -1,9 +1,3 @@
-variable "create_new" {
-  description = "The flag indicates whether to create a new mysql instance."
-  type        = bool
-  default     = true
-}
-
 variable "instance_name" {
   description = "The name of a mysql instance."
   type        = string
@@ -11,7 +5,7 @@ variable "instance_name" {
 }
 
 variable "instance_id" {
-  description = "The id of a mysql instance.Required when create_new is false"
+  description = "The id of a mysql instance."
   type        = string
   default     = ""
 }

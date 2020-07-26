@@ -1,5 +1,5 @@
 resource "tencentcloud_mysql_instance" "this" {
-  count = var.create_new ? 1 : 0
+  count = var.instance_id == "" ? 1 : 0
 
   instance_name     = var.instance_name
   root_password     = var.root_password
@@ -37,7 +37,7 @@ resource "tencentcloud_mysql_instance" "this" {
 resource "tencentcloud_mysql_account" "this" {
   count = local.account_number
 
-  mysql_id    = var.create_new ? tencentcloud_mysql_instance.this.0.id : var.instance_id
+  mysql_id    = var.instance_id == "" ? tencentcloud_mysql_instance.this.0.id : var.instance_id
   name        = var.account[count.index].account_name
   password    = var.account[count.index].account_password
   description = lookup(var.account[count.index], "account_description", "default description")
@@ -49,7 +49,7 @@ resource "tencentcloud_mysql_account_privilege" "this" {
 
   account_name   = var.account_privilege[count.index].account_name
   database_names = var.account_privilege[count.index].database_names
-  mysql_id       = var.create_new ? tencentcloud_mysql_instance.this.0.id : var.instance_id
+  mysql_id       = var.instance_id == "" ? tencentcloud_mysql_instance.this.0.id : var.instance_id
   account_host   = lookup(var.account_privilege[count.index], "account_host", "%")
   privileges     = lookup(var.account_privilege[count.index], "privileges", [])
   depends_on = [
@@ -62,7 +62,7 @@ resource "tencentcloud_mysql_privilege" "this" {
 
   account_name = var.mysql_privilege[count.index].account_name
   global       = var.mysql_privilege[count.index].global
-  mysql_id     = var.create_new ? tencentcloud_mysql_instance.this.0.id : var.instance_id
+  mysql_id     = var.instance_id == "" ? tencentcloud_mysql_instance.this.0.id : var.instance_id
   account_host = lookup(var.mysql_privilege[count.index], "account_host", "%")
   dynamic "column" {
     for_each = lookup(var.mysql_privilege[count.index], "column", [])
@@ -96,9 +96,9 @@ resource "tencentcloud_mysql_privilege" "this" {
 }
 
 resource "tencentcloud_mysql_backup_policy" "this" {
-  count = var.create_new ? 1 : var.instance_id != "" ? 1 : 0
+  count = var.instance_id == "" ? 1 : 0
 
-  mysql_id         = var.create_new ? tencentcloud_mysql_instance.this.0.id : var.instance_id
+  mysql_id         = var.instance_id == "" ? tencentcloud_mysql_instance.this.0.id : var.instance_id
   backup_model     = var.backup_model
   backup_time      = var.backup_time
   retention_period = var.retention_period
@@ -108,8 +108,8 @@ resource "tencentcloud_mysql_backup_policy" "this" {
 resource "tencentcloud_mysql_readonly_instance" "this" {
   count = local.readonly_instance_number
 
-  instance_name      = var.create_new ? format("%s-readonly%s", var.instance_name, count.index) : format("%s_readonly", var.readonly_instances[count.index].instance_name)
-  master_instance_id = var.create_new ? tencentcloud_mysql_instance.this.0.id : var.instance_id
+  instance_name      = var.instance_id == "" ? format("%s-readonly%s", var.instance_name, count.index) : format("%s_readonly", var.readonly_instances[count.index].instance_name)
+  master_instance_id = var.instance_id == "" ? tencentcloud_mysql_instance.this.0.id : var.instance_id
   mem_size           = lookup(var.readonly_instances[count.index], "mem_size", var.mem_size)
   volume_size        = lookup(var.readonly_instances[count.index], "volume_size", var.volume_size)
   auto_renew_flag    = lookup(var.readonly_instances[count.index], "auto_renew_flag", var.auto_renew_flag)

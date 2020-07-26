@@ -9,7 +9,6 @@ provider "tencentcloud" {
 module "privilege" {
   source = "../../"
 
-  create_new  = false
   instance_id = "cdb-rslbpa09"
   account = [
     {
